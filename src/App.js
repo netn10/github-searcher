@@ -12,12 +12,12 @@ function App() {
   const [date, setDate] = useState('');
   const [langs, setLangs] = useState('');
   const [data, setData] = useState('');
+  const [previousSearches, setPreviousSearches] = useState([]);
 
   const handleSubmit = event => {
     event.preventDefault();
 
     setSubmit(!submit);
-    console.log(submit);
 
    axios.post("http://127.0.0.1:5000/search", {
     input: input,
@@ -27,8 +27,9 @@ function App() {
     langs: langs,
   })
   .then(function (response) {
-    console.log(response.data.items)
-    setData(response.data.items);
+    console.log(response);
+    setData(response.data.response.items);
+    setPreviousSearches([...previousSearches, response.data.last_query]);
   })
   .catch(function (error) {
     console.log(error);
@@ -39,7 +40,7 @@ function App() {
   return(
     <div className="wrapper">
       <h1>Github Searcher</h1>
-      {!submit && (<form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <label>
             <p>Search Input</p>
@@ -74,7 +75,8 @@ function App() {
       
         <button type="submit">Search</button>
       </form>
-      )}
+      
+      {previousSearches ? <pre>Previous Searches: {previousSearches}</pre> : null}
       {submit ? <Table data={data} /> : null}
     </div>
   )
