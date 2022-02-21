@@ -17,7 +17,7 @@ function App() {
   const handleSubmit = event => {
     event.preventDefault();
 
-    setSubmit(!submit);
+    setSubmit(true);
 
    axios.post("http://127.0.0.1:5000/search", {
     input: input,
@@ -43,12 +43,9 @@ function App() {
       <form onSubmit={handleSubmit}>
         <fieldset>
           <label>
-            <p>Search Input</p>
+            <p>Repository Name</p>
           </label>
           <input name="name" onChange= {(e) => setInput(e.target.value)} value = {input} />
-          <label>
-            <p>By:</p>
-          </label>
           <label>
             <p>Stars</p>
             <select onChange={(e) => setMinMax(e.target.value)} value = {minMax}>
@@ -75,8 +72,8 @@ function App() {
       
         <button type="submit">Search</button>
       </form>
-      
-      {previousSearches ? <pre>Previous Searches: {previousSearches}</pre> : null}
+      <p>Previous Searches:</p>
+      {previousSearches ? <pre>{previousSearches}</pre> : null}
       {submit ? <Table data={data} /> : null}
     </div>
   )

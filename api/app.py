@@ -17,7 +17,7 @@ def search():
     # Create Github Search Query
 
     # name of reposatory - stays the same.
-    name = f"name:{form_data['input']}+"
+    name = f"{form_data['input']} in:name+"
 
     # date of creation - should not be entered empty to avoid bugs.
     date = form_data['date']
